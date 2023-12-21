@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "title": "Implement user authentication",
+        "description": "Add login and registration functionality",
+        "estimated_difficulty": 5,
+        "approved": false
+    },
+    {
+        "id": 2,
+        "title": "Create dashboard UI",
+        "description": "Design and implement the main dashboard",
+        "estimated_difficulty": 3,
+        "approved": false
+    }
+]
