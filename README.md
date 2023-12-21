@@ -1,8 +1,13 @@
 # Planning Poker
-## Requirements
-Install Pygame
+### Clone
 ```bash
-pip install pygame textwrap
+git clone https://github.com/sd-projet/projetCAPI.git
+cd projetCAPI/
 ```
-# How To run
+### Requirements
+Install requirements (pip)
+```bash
+pip install -r requirements.txt
+```
+### How To run
 command: python3 main.py
