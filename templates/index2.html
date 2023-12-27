@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<h1>{% block title %}Game {% endblock %}</h1>
+<div class="d-flex p-2">
+    {% if session.username and session.session %}
+       
+        <form action="{{ url_for('start') }}">
+            <button class="btn btn-success m-2" type="submit">Start poker</button>
+        </form>
+        <form action="{{ url_for('export') }}">
+            <button class="btn btn-info m-2" type="submit">Export data</button>
+        </form>
+        <form action="{{ url_for('reset') }}">
+            <button class="btn btn-danger m-2" onclick="return confirm('Are you sure?')" type="submit">Reset</button>
+        </form>
+    {% elif session.session %}
+        <form action="{{ url_for('add_player') }}">
+            <button class="btn btn-primary m-2" type="submit">Register</button>
+        </form>
+    {% else %}
+        <form action="{{ url_for('create_session') }}">
+            <button class="btn btn-primary m-2" type="submit">Create session</button>
+        </form>
+        <form action="{{ url_for('join_session') }}">
+            <button class="btn btn-primary m-2" type="submit">Join session</button>
+        </form>
+    {% endif %}
+</div>
+
+{% if session.username and session.session %}
+    <h2>Players:</h2>
+    {% for player in players %}
+        {{ player }}<br>
+    {% endfor %}
+
+    <h2>Tasks:</h2>
+    {% for task in tasks %}
+        {{ task.description }}{% if task.votes|length > 0 %}: {{ task.votes.values()|sum/task.votes|length }}{% endif %}<br>
+    {% endfor %}
+
+    <h2>Card configuration:</h2>
+    {% for card in cards %}
+		<!-- si <=100 on affiche les cartes correspondantes cartes_{{card}}.png-->
+		{% if card <= 100 %}
+
+			<button value="{{card}}">
+			<img src="/static/images/cartes_{{card}}.png" width="100" height="150"/></button>
+			{% endif %}
+		<!-- sinon on affiche les cartes correspondantes cartes_cafe.png-->
+		{% if card == 200 %}
+			<button value="cafe">
+			<img src="/static/images/cartes_cafe.png" width="100" height="150"/></button>
+			{% endif %}
+		<!-- sinon on affiche les cartes correspondantes cartes_interro.png-->
+		{% if card == 1000 %}
+			<button value="?">
+			<img src="/static/images/cartes_interro.png" width="100" height="150"/></button>
+		{% endif %}
+
+    {% endfor %}
+{% endif %}
+{% endblock %}

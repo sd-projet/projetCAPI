@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Planning Poker - Game</title>
+</head>
+<body>
+    <h1>Planning Poker - Game</h1>
+    <h2>Players:</h2>
+    <ul>
+        {% for player in players %}
+            <li>{{ player }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Features:</h2>
+    <ul>
+        {% for feature in features %}
+            <li>{{ feature }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Vote:</h2>
+    <form action="/vote" method="POST">
+        <label for="player">Player:</label>
+        <select id="player" name="player" required>
+            {% for player in players %}
+                <option value="{{ player }}">{{ player }}</option>
+            {% endfor %}
+        </select><br><br>
+        
+        <label for="vote">Vote:</label>
+        <input type="number" id="vote" name="vote" required><br><br>
+        
+        <input type="submit" value="Submit Vote" class="btn btn-primary">
+    </form>
+    
+    <h2>Validation:</h2>
+    <form action="/validate" method="POST">
+        <label for="feature">Feature:</label>
+        <select id="feature" name="feature" required>
+            {% for feature in features %}
+                <option value="{{ feature }}">{{ feature }}</option>
+            {% endfor %}
+        </select><br><br>
+        
+        <input type="submit" value="Validate Feature" class="btn btn-primary">
+    </form>
+    
+    <h2>Save Game:</h2>
+    <form action="/save" method="POST">
+        <input type="submit" value="Save Game" class="btn btn-primary">
+    </form>
+</body>
+</html>

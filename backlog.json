@@ -12,5 +12,20 @@
         "description": "Design and implement the main dashboard",
         "estimated_difficulty": 3,
         "approved": false
+    },
+    {
+        "id": 3,
+        "title": "Modify an existing profile",
+        "description": "Allow users to modify their profile",
+        "estimated_difficulty": 2,
+        "approved": false
+    },
+    {
+        "id": 4,
+        "title": "Insert a picture in a profile",
+        "description": "Allow users to add a picture to their profile",
+        "estimated_difficulty": 1,
+        "approved": false
     }
+
 ]

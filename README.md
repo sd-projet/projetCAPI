@@ -1,13 +1,19 @@
-# Planning Poker
-### Clone
+# Planning Poker Flask
+#### Clone
 ```bash
 git clone https://github.com/sd-projet/projetCAPI.git
 cd projetCAPI/
 ```
-### Requirements
-Install requirements (pip)
+
+#### How to run
 ```bash
 pip install -r requirements.txt
+python3 main.py [backlog_file]
 ```
-### How To run
-command: python3 main.py
+backlog_file is optional, if not specified, the default file is used (backlog.json)
+
+#### Non implementé
+- Detect if all players have chosen coffee card
+- Choose another game mode that strict rule
+- No errors handling
+- No unitary tests
