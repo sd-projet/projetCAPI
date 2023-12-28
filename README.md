@@ -29,7 +29,7 @@ http://127.0.0.1:8080/
 #### Non implementé
 - Game's logic (vote, reveal)
 - No errors handling
-- No unitary tests
+- Multi-players round
 
 #### API :
 - /create_session : create a new session and load the backlog
@@ -37,5 +37,5 @@ http://127.0.0.1:8080/
 - /addplayer : add a player to the session
 - /start : start the game
 - /reset : reset the current session
-- /export : export the session in a json file
+- /export : export the session in a json file [WIP not functional]
 
