@@ -1,0 +1,57 @@
+<!-- nouvelle-partie.html -->
+<!-- page pour une nouvelle partie -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Nouvelle Partie - Planning Poker</title>
+
+</head>
+<body>
+<div id="app-container">
+<div id="step1" class="step">
+    <h2>Étape 1: Choisissez le nombre de joueurs</h2>
+    <input type="number" id="player-count" min="1">
+    <button id="next-step-btn">Suivant</button>
+</div>
+
+<div id="step2" class="step">
+    <h2>Étape 2: Saisissez les pseudos des joueurs</h2>
+    <ul id="players-list"></ul>
+    <button id="next-step-btn-2">Suivant</button>
+</div>
+
+<div id="step3" class="step">
+    <h2>Étape 3: Choisissez une règle</h2>
+    <label for="rule-select">Règle :</label>
+    <select id="rule-select">
+        <option value="Stricte">Stricte</option>
+        <option value="Moyenne">Moyenne</option>
+        <option value="Mediane">Médiane</option>
+    </select>
+    <button id="next-step-btn-3">Suivant</button>
+</div>
+
+<div id="step4" class="step">
+    <h2>Étape 4: Ajouter les fonctionnalités</h2>
+    <div id="manual-entry" class="entry-option">
+        <!-- Ajoute les champs pour la saisie manuelle -->
+        <label for="manual-features">Fonctionnalités :</label>
+        <br>
+        <textarea id="manual-features"> </textarea>
+        <br>
+        <button id="add-feature-btn">Ajouter</button>
+        <ul id="feature-list"></ul>
+    </div>
+
+    <button id="finish-btn">Commencer la partie</button>
+</div>
+</div>
+<script src="nouvelle-partie.js"></script>
+<script src="vote.js"></script>
+
+</body>
+</html>
