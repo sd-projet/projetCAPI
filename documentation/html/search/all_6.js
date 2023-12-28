@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['join_5fsession_0',['join_session',['../namespacemain.html#af7d188d3e40b682462dc61588b9eacf9',1,'main']]]
+  ['index_0',['index',['../namespacemain.html#a66214b760078a6baace234349bf4be05',1,'main']]]
 ];

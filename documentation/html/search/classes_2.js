@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tache_0',['Tache',['../classhelper_1_1_tache.html',1,'helper']]]
+  ['medianrule_0',['MedianRule',['../classmain_1_1_median_rule.html',1,'main']]]
 ];

@@ -38,7 +38,7 @@ class Tache:
 200 : ??
 1000 : cafe
 """
-CARTES = [1, 2, 3, 5, 8, 13, 20, 40, 100, 200, 1000]
+CARTES = ['1','2', '3', '5', '8', '13', '20', '40', '100', '☕', '?']
 
 
 def load_features_from_json(file_path):

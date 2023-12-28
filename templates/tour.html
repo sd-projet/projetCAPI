@@ -6,7 +6,25 @@
 
 <div class="d-flex justify-content-around fixed-bottom mb-2">
     {% for card in cards %}
-        <a href="{{ url_for('vote', task=id, points=card) }}" class="btn btn-primary p-5">{{ card }}</a>
+        
+        <!-- si <=100 on affiche les cartes correspondantes cartes_{{card}}.png-->
+    {% if card in  ['1','2', '3', '5', '8', '13', '20', '40', '100'] %}
+        <a href="{{ url_for('vote', task=id, points=card) }}">
+        <button value="{{card}}">
+        <img src="/static/images/cartes_{{card}}.png" width="100" height="150"/></button></a>
+        {% endif %}
+    <!-- sinon on affiche les cartes correspondantes cartes_cafe.png-->
+    {% if card == '☕' %}
+        <a href="{{ url_for('vote', task=id, points=card) }}">
+        <button value="cafe">
+        <img src="/static/images/cartes_cafe.png" width="100" height="150"/></button></a>
+        {% endif %}
+    <!-- sinon on affiche les cartes correspondantes cartes_interro.png-->
+    {% if card == '?' %}
+        <a href="{{ url_for('vote', task=id, points=card) }}">
+        <button value="?">
+        <img src="/static/images/cartes_interro.png" width="100" height="150"/></button></a>
+    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['player_0',['Player',['../classgame_1_1_player.html',1,'game.Player'],['../classhelper_1_1_player.html',1,'helper.Player']]]
+  ['main_0',['main',['../namespacemain.html',1,'']]],
+  ['medianrule_1',['MedianRule',['../classmain_1_1_median_rule.html',1,'main']]]
 ];

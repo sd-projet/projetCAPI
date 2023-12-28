@@ -9,11 +9,89 @@ from flask import Flask
 from flask import request, Response, jsonify
 from flask import render_template, session, redirect, url_for, flash
 
-from helper import CARTES, load_features_from_json, Player
+from helper import CARTES, load_features_from_json, Player, Tache
 
-mydict={}
-mydict2={}
-revealScores=False
+
+
+
+class SessionManager:
+    """
+    @class SessionManager
+    @brief This class is a singleton used to manage the session or the database.
+    """
+    _instance = None
+
+   
+    @classmethod
+    def get_instance(cls):
+        """
+        @fn get_instance
+        @brief This function returns the instance of the SessionManager class.
+        """
+        if not cls._instance:
+            cls._instance = SessionManager()
+        return cls._instance
+
+
+
+class RuleFactory:
+    """
+    @class RuleFactory
+    @brief This class is a factory used to create the rules.
+    """
+    @staticmethod
+    def get_rule(rule_type):
+        """
+        @fn get_rule
+        @brief This function returns the rule corresponding to the rule type.
+        """
+        if rule_type == "strict":
+            return StrictRule()
+        elif rule_type == "average":
+            return AverageRule()
+        elif rule_type == "median":
+            return MedianRule()
+        # Implémentez d'autres règles ici
+
+# Exemple de classe de règle
+class StrictRule:
+    """
+    @class StrictRule
+    @brief This class is a rule used to evaluate the votes."""
+    def evaluate_votes(self, votes):
+        # Logique d'évaluation pour la règle stricte
+        max_vote_count = 0
+        winning_votes = []
+
+        for vote in votes:
+            vote_count = votes.count(vote)
+            if vote_count > max_vote_count:
+                max_vote_count = vote_count
+                winning_votes = [vote]
+            elif vote_count == max_vote_count:
+                winning_votes.append(vote)
+
+        return max_vote_count, winning_votes
+
+
+class AverageRule:
+    """
+    @class AverageRule
+    @brief This class is a rule used to evaluate the votes."""
+    def evaluate_votes(self, votes):
+        # Logique d'évaluation pour la règle de la moyenne
+        total_score = sum(votes)
+        average_score = total_score / len(votes)
+        average_score = round(average_score, 2)  # Round to 2 decimal places if needed
+
+        return average_score
+class MedianRule:
+    pass
+
+
+# mydict={}
+# mydict2={}
+# revealScores=False
 
 """
 @var sessions: a dictionary of sessions, the key is the session token and the value is a dictionary containing the players, the tasks and the cards"""
@@ -66,6 +144,8 @@ app.secret_key = "kWd4qM4Z"
 #     return jsonify(mydict2)
 
 
+
+####### API endpoints #######
 @app.route('/', methods=['GET'])
 def index():
     """
@@ -98,18 +178,14 @@ def add_player():
     @brief This function handles the POST request for the "/addplayer" URL.
     @return The rendered template "addplayer.html".
     """
-    session_player = session.get('username', None)
-    sessionT = session.get('session', None)
-    if session_player is not None and sessionT is not None:
-        if session_player not in sessions[sessionT]['players']:
-            sessions[sessionT]['players'][session_player] = Player(session_player)
-            flash(f'Player {session_player} added')
-            return redirect(url_for('index'))
-        else:
-            flash(f'Player {session_player} already exists')
-            return redirect(url_for('index'))
-    if request.method == 'POST':
-        session['username'] = request.form['username']
+
+    if request.method == 'POST' and request.form.getlist('username[]') is not None:
+        usernames = request.form.getlist('username[]')
+        for username in usernames:
+            if username != "":
+                session['username'] = username
+                sessions[session['session']]['players'][username] = Player(username)
+        
         return redirect(url_for('index'))
     return render_template('addplayer.html')
 
@@ -123,7 +199,7 @@ def start():
     """
     tasks = sessions[session['session']]['tasks']
     if len(tasks) == 0:
-        flash('Le backlog est vide.')
+        flash('Pas de tâches !')
         return redirect(url_for('index'))
     return redirect(url_for('round', task=0))
 
@@ -141,7 +217,8 @@ def round(task):
         return redirect(url_for('index'))
     return render_template('tour.html', task=tasks[task], id=task, cards=sessions[session['session']]['cards'])
 
-@app.route('/vote/<int:task>/<int:points>')
+
+@app.route('/vote/<int:task>/<points>')
 def vote(task, points):
     """
     @fn vote
@@ -182,7 +259,8 @@ def export():
     # export to JSON
     # impossible to serialize Task objects, so we convert them to dictionaries
     tasks_dict = [task.__dict__ for task in tasks]
-    json.dump({'tasks': tasks_dict, 'players': players}, open('save.json', 'w'))
+    players_d = [player.username for player in players.values()]
+    json.dump({'tasks': tasks_dict, 'players': players_d}, open('save.json', 'w')) #doesn't work
     return {'tasks': tasks, 'players': players}
 
 @app.route('/create_session')
@@ -221,6 +299,27 @@ def join_session():
         session['session'] = sessionTok
         return redirect(url_for('index'))
     return render_template('join_session.html')
+
+@app.route('/enter_backlog', methods=('GET', 'POST'))
+def enter_backlog():
+    """
+    @fn enter_backlog
+    @brief This function handles the GET and POST requests for the "/enter_backlog" URL.
+    """
+    if request.method == 'POST':
+        sessionTok = uuid.uuid4()
+        session['session'] = sessionTok
+        sessions[sessionTok] = {'players': {}, 'tasks': [], 'cards': CARTES}
+        
+        #ajouter les tasks rentrés manuellement
+        tasks = request.form.getlist('backlog_item[]')
+        for t in tasks:
+            sessions[sessionTok]['tasks'].append(Tache(t, {}))
+
+
+        return redirect(url_for('index'))
+    return render_template('enter_backlog.html')
+
 
 @app.route('/reset')
 def reset():

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['feature_0',['Feature',['../classgame_1_1_feature.html',1,'game']]]
+  ['averagerule_0',['AverageRule',['../classmain_1_1_average_rule.html',1,'main']]]
 ];

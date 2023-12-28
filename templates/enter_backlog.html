@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>Enter Backlog</h1>
+
+  <form method="POST" action="{{ url_for('enter_backlog') }}">
+    <div class="form-group">
+      <label for="backlog_item">Task:</label>
+      <input type="text" class="form-control" name="backlog_item[]" required>
+      <label for="backlog_item">Task:</label>
+      <input type="text" class="form-control" name="backlog_item[]" >
+      <label for="backlog_item">Task:</label>
+      <input type="text" class="form-control" name="backlog_item[]" >
+      <label for="backlog_item">Task:</label>
+      <input type="text" class="form-control" name="backlog_item[]" >
+      <label for="backlog_item">Task:</label>
+      <input type="text" class="form-control" name="backlog_item[]" >
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+{% endblock %}
